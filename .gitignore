@@ -1,0 +1,10 @@
+node_modules
+dist
+.DS_Store
+*.py
+*.pyc
+__pycache__
+mapping_results.json
+parsed_products.json
+yandex_summary.json
+deep_summary.txt

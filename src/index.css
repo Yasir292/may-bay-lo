@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --navy: #0A1628;
+    --gold: #C9A96E;
+    --gold-light: #E8D5A3;
+    --cream: #F5F0EB;
+    --charcoal: #1E293B;
+    --slate: #64748B;
+    --warm-gray: #9CA3AF;
+    --light-border: rgba(10, 22, 40, 0.08);
+    --dark-border: rgba(255, 255, 255, 0.1);
+    --background: 30 23% 95%;
+    --foreground: 216 56% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 216 56% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 216 56% 10%;
+    --primary: 40 43% 61%;
+    --primary-foreground: 216 56% 10%;
+    --secondary: 30 23% 95%;
+    --secondary-foreground: 216 56% 10%;
+    --muted: 30 23% 92%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 30 23% 95%;
+    --accent-foreground: 216 56% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 30 10% 88%;
+    --input: 30 10% 88%;
+    --ring: 40 43% 61%;
+    --radius: 0.125rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--cream);
+    color: var(--navy);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Hide scrollbar for horizontal scroll containers */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer components {
+  .section-label {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(12px, 1.2vw, 14px);
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+    margin-right: 12px;
+    vertical-align: middle;
+  }
+
+  .gold-shimmer-bg {
+    background: linear-gradient(90deg, #C9A96E 0%, #E8D5A3 50%, #C9A96E 100%);
+    background-size: 200% auto;
+  }
+
+  .hero-gradient {
+    background: linear-gradient(135deg, #0A1628 0%, #1E293B 40%, #0A1628 100%);
+  }
+
+  .cream-warm {
+    background: linear-gradient(180deg, #F5F0EB 0%, #EDE6DE 100%);
+  }
+
+  .overlay-dark {
+    background: linear-gradient(0deg, rgba(10,22,40,0.85) 0%, rgba(10,22,40,0.3) 60%, transparent 100%);
+  }
+}
