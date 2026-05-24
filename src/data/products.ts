@@ -16,7 +16,7 @@ export interface Product {
 }
 
 // ──────────────────────────────────────────
-// MEN'S COLLECTION (12 original + 10 GP)
+// MEN'S COLLECTION
 // ──────────────────────────────────────────
 const menProducts: Product[] = [
   {
@@ -374,7 +374,7 @@ const menProducts: Product[] = [
 ]
 
 // ──────────────────────────────────────────
-// WOMEN'S COLLECTION (20 original + 10 GP + 11 New)
+// WOMEN'S COLLECTION
 // ──────────────────────────────────────────
 const womenProducts: Product[] = [
   {
@@ -1033,10 +1033,138 @@ const womenProducts: Product[] = [
     isSale: false,
     gender: 'women',
   },
+  {
+    id: 'MBL-W011',
+    name: 'Crystal Drop Earrings',
+    brand: 'Chanel',
+    price: 165,
+    originalPrice: 231,
+    image: '/products/women/MBL-W011.jpg',
+    category: 'women',
+    subCategory: 'Earrings',
+    code: 'MBL-W011',
+    description: 'Stunning crystal drop earrings from Chanel featuring the iconic CC logo and cascading crystals. 18K gold-plated brass with a push-back closure for secure wear.',
+    sizes: ['One Size'],
+    isNew: true,
+    isSale: false,
+    gender: 'women',
+  },
+  {
+    id: 'MBL-W012',
+    name: 'Logo Pendant Necklace',
+    brand: 'Dior',
+    price: 145,
+    originalPrice: 203,
+    image: '/products/women/MBL-W012.jpg',
+    category: 'women',
+    subCategory: 'Necklaces',
+    code: 'MBL-W012',
+    description: 'Elegant pendant necklace from Dior featuring the signature CD logo in gold-tone metal. Adjustable chain length with lobster clasp closure. A timeless everyday luxury piece.',
+    sizes: ['One Size'],
+    isNew: true,
+    isSale: false,
+    gender: 'women',
+  },
+  {
+    id: 'MBL-W013',
+    name: 'Leather Ankle Boots',
+    brand: 'Prada',
+    price: 285,
+    originalPrice: 399,
+    image: '/products/women/MBL-W013.jpg',
+    category: 'women',
+    subCategory: 'Boots',
+    code: 'MBL-W013',
+    description: 'Brushed leather ankle boots from Prada with a 65mm block heel. Features a side zip closure, leather-lined interior, and the iconic triangle logo plaque on the heel.',
+    sizes: ['36', '37', '38', '39', '40', '41'],
+    isNew: false,
+    isSale: false,
+    gender: 'women',
+  },
+  {
+    id: 'MBL-W014',
+    name: 'Vara Ballet Flats',
+    brand: 'Salvatore Ferragamo',
+    price: 195,
+    originalPrice: 273,
+    image: '/products/women/MBL-W014.jpg',
+    category: 'women',
+    subCategory: 'Ballerinas',
+    code: 'MBL-W014',
+    description: 'Iconic Vara ballet flats from Salvatore Ferragamo in patent leather. Features the signature grosgrain bow with gold-tone Gancini ornament and a cushioned leather insole.',
+    sizes: ['36', '37', '38', '39', '40', '41'],
+    isNew: false,
+    isSale: false,
+    gender: 'women',
+  },
+  {
+    id: 'MBL-W015',
+    name: 'Tribute Flat Sandals',
+    brand: 'YSL',
+    price: 215,
+    originalPrice: 301,
+    image: '/products/women/MBL-W015.jpg',
+    category: 'women',
+    subCategory: 'Sandals',
+    code: 'MBL-W015',
+    description: 'Tribute flat sandals from YSL in smooth calfskin leather. Features intertwining straps with the YSL logo, a padded insole, and a durable leather sole. Perfect for warm-weather elegance.',
+    sizes: ['36', '37', '38', '39', '40', '41'],
+    isNew: false,
+    isSale: false,
+    gender: 'women',
+  },
+  {
+    id: 'MBL-W016',
+    name: 'Horsebit Loafers',
+    brand: 'Gucci',
+    price: 225,
+    originalPrice: 315,
+    image: '/products/women/MBL-W016.jpg',
+    category: 'women',
+    subCategory: 'Loafers',
+    code: 'MBL-W016',
+    description: 'Classic horsebit loafers from Gucci in supple black leather. Features the iconic gold-tone horsebit hardware, leather sole, and a low stacked heel for all-day comfort.',
+    sizes: ['36', '37', '38', '39', '40', '41'],
+    isNew: false,
+    isSale: false,
+    gender: 'women',
+  },
+  {
+    id: 'MBL-W017',
+    name: 'Love Bangle Bracelet',
+    brand: 'Cartier',
+    price: 285,
+    originalPrice: 399,
+    image: '/products/women/MBL-W017.jpg',
+    category: 'women',
+    subCategory: 'Bracelets',
+    code: 'MBL-W017',
+    description: 'Iconic Love bracelet from Cartier in 18K rose gold. Features the signature screw motifs and comes with the original screwdriver. A timeless symbol of commitment and luxury.',
+    sizes: ['16cm', '17cm', '18cm', '19cm', '20cm'],
+    isNew: true,
+    isSale: false,
+    gender: 'women',
+  },
+  {
+    id: 'MBL-W018',
+    name: 'Monogram Travel Bag',
+    brand: 'Louis Vuitton',
+    price: 325,
+    originalPrice: 455,
+    image: '/products/women/MBL-W018.jpg',
+    category: 'women',
+    subCategory: 'Travel Bags',
+    code: 'MBL-W018',
+    description: 'Keepall Bandoulière 45 from Louis Vuitton in iconic monogram canvas. Features natural leather trim, double zip closure, padlock, removable shoulder strap, and spacious interior.',
+    sizes: ['One Size'],
+    isNew: false,
+    isSale: false,
+    gender: 'women',
+  },
 ]
 
 // ──────────────────────────────────────────
-// ACCESSORIES COLLECTION (18 original + 3 missing + 12 GP)
+// ACCESSORIES COLLECTION
 // ──────────────────────────────────────────
 const accessoriesProducts: Product[] = [
   {
@@ -1570,7 +1698,7 @@ const accessoriesProducts: Product[] = [
 ]
 
 // ──────────────────────────────────────────
-// CHILDREN'S COLLECTION (8 original + 4 GP)
+// CHILDREN'S COLLECTION
 // ──────────────────────────────────────────
 const childrenProducts: Product[] = [
   {
@@ -1765,6 +1893,134 @@ const childrenProducts: Product[] = [
     isSale: false,
     gender: 'children',
   },
+  {
+    id: 'MBL-C005',
+    name: 'Kids Tracksuit Set',
+    brand: 'Moncler',
+    price: 75,
+    originalPrice: 105,
+    image: '/products/children/MBL-C005.jpg',
+    category: 'children',
+    subCategory: 'Tracksuits',
+    code: 'MBL-C005',
+    description: 'Premium tracksuit set from Moncler Kids in soft cotton blend. Features the iconic logo patch, zip-up jacket with ribbed cuffs, and matching jogger bottoms with elasticated waist.',
+    sizes: ['4Y', '6Y', '8Y', '10Y', '12Y'],
+    isNew: true,
+    isSale: false,
+    gender: 'children',
+  },
+  {
+    id: 'MBL-C006',
+    name: 'Kids Swimming Shorts',
+    brand: 'Gucci',
+    price: 38,
+    originalPrice: 53,
+    image: '/products/children/MBL-C006.jpg',
+    category: 'children',
+    subCategory: 'Swimwear',
+    code: 'MBL-C006',
+    description: 'Designer swimming shorts from Gucci Kids with the iconic GG print. Features a quick-dry mesh lining, elasticated drawstring waist, and side pockets.',
+    sizes: ['4Y', '6Y', '8Y', '10Y', '12Y'],
+    isNew: true,
+    isSale: false,
+    gender: 'children',
+  },
+  {
+    id: 'MBL-C007',
+    name: 'Kids Dressing Gown',
+    brand: 'Versace',
+    price: 55,
+    originalPrice: 77,
+    image: '/products/children/MBL-C007.jpg',
+    category: 'children',
+    subCategory: 'Dressing Gowns',
+    code: 'MBL-C007',
+    description: 'Luxurious dressing gown from Versace Kids in plush cotton terry. Features the Medusa head embroidery, shawl collar, tie belt, and two front pockets.',
+    sizes: ['4Y', '6Y', '8Y', '10Y', '12Y'],
+    isNew: false,
+    isSale: false,
+    gender: 'children',
+  },
+  {
+    id: 'MBL-C008',
+    name: 'Kids Padded Gilet',
+    brand: 'Moncler',
+    price: 62,
+    originalPrice: 87,
+    image: '/products/children/MBL-C008.jpg',
+    category: 'children',
+    subCategory: 'Body Warmers',
+    code: 'MBL-C008',
+    description: 'Quilted padded gilet from Moncler Kids with down filling. Features the signature logo patch, high neck, zip front closure, and elasticated hem for a snug fit.',
+    sizes: ['4Y', '6Y', '8Y', '10Y', '12Y'],
+    isNew: false,
+    isSale: false,
+    gender: 'children',
+  },
+  {
+    id: 'MBL-C009',
+    name: 'Kids Crewneck Sweatshirt',
+    brand: 'Stone Island',
+    price: 45,
+    originalPrice: 63,
+    image: '/products/children/MBL-C009.jpg',
+    category: 'children',
+    subCategory: 'Sweatshirts',
+    code: 'MBL-C009',
+    description: 'Junior crewneck sweatshirt from Stone Island in brushed cotton fleece. Features the removable compass badge on the sleeve, ribbed trims, and a relaxed comfortable fit.',
+    sizes: ['4Y', '6Y', '8Y', '10Y', '12Y'],
+    isNew: false,
+    isSale: false,
+    gender: 'children',
+  },
+  {
+    id: 'MBL-C010',
+    name: 'Kids Logo Joggers',
+    brand: 'Dior',
+    price: 42,
+    originalPrice: 59,
+    image: '/products/children/MBL-C010.jpg',
+    category: 'children',
+    subCategory: 'Joggers',
+    code: 'MBL-C010',
+    description: 'Dior Kids jogger pants in soft cotton jersey. Features the iconic Oblique side stripe, elasticated waist with drawstring, cuffed ankles, and two side pockets.',
+    sizes: ['4Y', '6Y', '8Y', '10Y', '12Y'],
+    isNew: false,
+    isSale: false,
+    gender: 'children',
+  },
+  {
+    id: 'MBL-C011',
+    name: 'Kids Button-Up Shirt',
+    brand: 'Burberry',
+    price: 48,
+    originalPrice: 67,
+    image: '/products/children/MBL-C011.jpg',
+    category: 'children',
+    subCategory: 'Shirts',
+    code: 'MBL-C011',
+    description: 'Classic button-up shirt from Burberry Kids in cotton poplin. Features the signature check trim on the collar and cuffs, chest pocket with embroidered logo, and a tailored fit.',
+    sizes: ['4Y', '6Y', '8Y', '10Y', '12Y'],
+    isNew: false,
+    isSale: false,
+    gender: 'children',
+  },
+  {
+    id: 'MBL-C012',
+    name: 'Kids Coordinated Outfit Set',
+    brand: 'Fendi',
+    price: 68,
+    originalPrice: 95,
+    image: '/products/children/MBL-C012.jpg',
+    category: 'children',
+    subCategory: 'Sets',
+    code: 'MBL-C012',
+    description: 'Coordinated outfit set from Fendi Kids featuring a polo shirt with FF logo detail and matching shorts. Premium cotton with a comfortable relaxed fit for everyday style.',
+    sizes: ['4Y', '6Y', '8Y', '10Y', '12Y'],
+    isNew: true,
+    isSale: false,
+    gender: 'children',
+  },
 ]
 
 // ──────────────────────────────────────────
@@ -1795,7 +2051,7 @@ export function getProductById(id: string): Product | undefined {
 }
 
 export function getFeaturedProducts(): Product[] {
-  // Return the hot sellers — mix of original + new Gazelle Port products
+  // Return the hot sellers — curated selection of best-selling products
   return [
     products.find((p) => p.id === 'GP-A001')!,
     products.find((p) => p.id === 'GP-W001')!,
@@ -1809,7 +2065,7 @@ export function getFeaturedProducts(): Product[] {
 }
 
 export function getNewArrivals(): Product[] {
-  // New arrivals from Gazelle Port + original new items
+  // Latest new arrivals across all categories
   const newItems = [
     products.find((p) => p.id === 'GP-A006')!,
     products.find((p) => p.id === 'GP-W004')!,
