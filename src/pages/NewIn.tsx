@@ -1,31 +1,32 @@
-import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
-import { getProductsByCategory, getProductSubCategory } from '@/data/products'
+import { products, getProductSubCategory } from '@/data/products'
 import ProductCard from '@/components/ProductCard'
 
-const sortOptions = ['Featured', 'Price: Low to High', 'Price: High to Low', 'Newest']
+const sortOptions = ['Featured', 'Newest', 'Price: Low to High', 'Price: High to Low']
 
-export default function ShopMen() {
-  const location = useLocation()
-  const [sortBy, setSortBy] = useState('Featured')
+export default function NewIn() {
+  const [sortBy, setSortBy] = useState('Newest')
   const [showSort, setShowSort] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState('All Categories')
   const [selectedSubCategory, setSelectedSubCategory] = useState('All Items')
   const [selectedBrand, setSelectedBrand] = useState('All Brands')
 
-  useEffect(() => {
-    if (location.state?.subCategory) {
-      setSelectedSubCategory(location.state.subCategory)
-    }
-  }, [location.state])
+  // New products are those with isNew: true OR our new UK collection IDs starting with MBL-
+  const newProducts = products.filter((p) => p.isNew || p.id.startsWith('MBL-'))
+
+  const categories = ['All Categories', ...Array.from(new Set(newProducts.map((p) => p.category))).sort()]
   
-  const products = getProductsByCategory('men')
+  const filteredByCategory = newProducts.filter(
+    (p) => selectedCategory === 'All Categories' || p.category === selectedCategory
+  )
 
-  const subCategories = ['All Items', ...Array.from(new Set(products.map(p => getProductSubCategory(p)))).sort()]
-  const brands = ['All Brands', ...Array.from(new Set(products.map(p => p.brand))).sort()]
+  const subCategories = ['All Items', ...Array.from(new Set(filteredByCategory.map((p) => getProductSubCategory(p)))).sort()]
+  const brands = ['All Brands', ...Array.from(new Set(filteredByCategory.map((p) => p.brand))).sort()]
 
-  const filteredProducts = products.filter(p => {
+  const filteredProducts = filteredByCategory.filter((p) => {
     const matchSub = selectedSubCategory === 'All Items' || getProductSubCategory(p) === selectedSubCategory
     const matchBrand = selectedBrand === 'All Brands' || p.brand === selectedBrand
     return matchSub && matchBrand
@@ -34,41 +35,66 @@ export default function ShopMen() {
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sortBy === 'Price: Low to High') return a.price - b.price
     if (sortBy === 'Price: High to Low') return b.price - a.price
-    if (sortBy === 'Newest') return (a.isNew ? -1 : 1) - (b.isNew ? -1 : 1)
+    // Default newest order: MBL collection first
+    if (sortBy === 'Newest') {
+      const aVal = a.id.startsWith('MBL-') ? 2 : a.isNew ? 1 : 0
+      const bVal = b.id.startsWith('MBL-') ? 2 : b.isNew ? 1 : 0
+      return bVal - aVal
+    }
     return 0
   })
 
   return (
-    <div className="min-h-[100dvh] bg-cream">
-      {/* Hero Banner */}
-      <div className="relative h-[360px] md:h-[440px] overflow-hidden">
-        <img src="/category-men.jpg" alt="Men's Collection" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-navy/60" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-          <span className="section-label text-gold mb-4">Collection</span>
-          <h1 className="font-display text-display-md text-white mb-3">Men&apos;s Collection</h1>
-          <p className="font-body text-body-lg text-white/80 max-w-lg">
-            Refined essentials for the modern gentleman. From tailored pieces to casual luxury.
-          </p>
-        </div>
-      </div>
-
-      {/* Breadcrumbs + Filter Bar */}
-      <div className="max-w-container mx-auto px-6 py-6">
+    <div className="min-h-[100dvh] bg-cream pt-28 pb-16">
+      <div className="max-w-container mx-auto px-6">
+        {/* Breadcrumbs */}
         <div className="flex items-center gap-2 text-[13px] font-body text-slate mb-6">
           <Link to="/" className="hover:text-gold transition-colors">Home</Link>
           <span>/</span>
-          <Link to="/shop/men" className="hover:text-gold transition-colors">Shop</Link>
-          <span>/</span>
-          <span className="text-navy font-medium">Men</span>
+          <span className="text-navy font-medium">New In</span>
+        </div>
+
+        {/* Header */}
+        <div className="mb-10 text-left">
+          <span className="inline-flex items-center font-accent italic text-[14px] text-gold uppercase tracking-wider mb-2">
+            Just Added
+          </span>
+          <h1 className="font-display text-display-md text-navy">New Arrivals</h1>
+          <p className="font-body text-slate mt-2 max-w-xl">
+            Explore the latest UK arrivals in designer apparel, loungewear, and activewear collections.
+          </p>
         </div>
 
         {/* Filter Bar */}
         <div className="flex flex-col gap-6 mb-8 border-b border-light-border pb-6">
+          {/* Main Category Filter */}
+          <div>
+            <span className="font-body text-[12px] font-semibold uppercase tracking-wider text-navy block mb-3">Category</span>
+            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    setSelectedCategory(cat)
+                    setSelectedSubCategory('All Items')
+                    setSelectedBrand('All Brands')
+                  }}
+                  className={`px-4 py-2 rounded-full font-body text-[13px] tracking-wide whitespace-nowrap transition-all duration-300 border ${
+                    selectedCategory === cat
+                      ? 'bg-navy text-gold border-navy shadow-md font-medium'
+                      : 'bg-white text-navy border-light-border hover:border-gold hover:text-gold'
+                  }`}
+                >
+                  {cat === 'All Categories' ? 'All Collections' : cat.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Sub-Category Filter */}
           <div>
             <span className="font-body text-[12px] font-semibold uppercase tracking-wider text-navy block mb-3">Sub-Category</span>
-            <div className="flex gap-2 overflow-x-auto pb-2 -mx-6 px-6 md:mx-0 md:px-0 scrollbar-none">
+            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
               {subCategories.map((cat) => (
                 <button
                   key={cat}
@@ -88,7 +114,7 @@ export default function ShopMen() {
           {/* Brand Filter */}
           <div>
             <span className="font-body text-[12px] font-semibold uppercase tracking-wider text-navy block mb-3">Brand</span>
-            <div className="flex gap-2 overflow-x-auto pb-2 -mx-6 px-6 md:mx-0 md:px-0 scrollbar-none">
+            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
               {brands.map((b) => (
                 <button
                   key={b}
@@ -106,8 +132,9 @@ export default function ShopMen() {
           </div>
         </div>
 
+        {/* Results Header */}
         <div className="flex items-center justify-between mb-8">
-          <p className="font-body text-[14px] text-slate">{filteredProducts.length} products</p>
+          <p className="font-body text-[14px] text-slate">{sortedProducts.length} new items</p>
           <div className="relative">
             <button
               onClick={() => setShowSort(!showSort)}
@@ -135,9 +162,10 @@ export default function ShopMen() {
         {/* Product Grid */}
         {sortedProducts.length === 0 ? (
           <div className="text-center py-16">
-            <p className="font-body text-body-lg text-slate mb-4">No products found matching your filters.</p>
+            <p className="font-body text-body-lg text-slate mb-4">No new products found matching your filters.</p>
             <button
               onClick={() => {
+                setSelectedCategory('All Categories')
                 setSelectedSubCategory('All Items')
                 setSelectedBrand('All Brands')
               }}
@@ -153,7 +181,7 @@ export default function ShopMen() {
                 key={product.id}
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+                transition={{ delay: i * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               >
                 <ProductCard product={product} />
               </motion.div>

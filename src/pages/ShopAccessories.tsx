@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { getProductsByCategory, getProductSubCategory } from '@/data/products'
@@ -8,10 +8,17 @@ import ProductCard from '@/components/ProductCard'
 const sortOptions = ['Featured', 'Price: Low to High', 'Price: High to Low', 'Newest']
 
 export default function ShopAccessories() {
+  const location = useLocation()
   const [sortBy, setSortBy] = useState('Featured')
   const [showSort, setShowSort] = useState(false)
   const [selectedSubCategory, setSelectedSubCategory] = useState('All Items')
   const [selectedBrand, setSelectedBrand] = useState('All Brands')
+
+  useEffect(() => {
+    if (location.state?.subCategory) {
+      setSelectedSubCategory(location.state.subCategory)
+    }
+  }, [location.state])
   
   const products = getProductsByCategory('accessories')
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronRight, ChevronLeft, Truck, Shield, Clock } from 'lucide-react'
 import { getFeaturedProducts, getNewArrivals, products } from '@/data/products'
@@ -602,6 +602,140 @@ function NewsletterCTA() {
 }
 
 // ──────────────────────────────────────
+// Trending Products (UK Hot Sellers)
+// ──────────────────────────────────────
+function TrendingProducts() {
+  const { ref, isVisible } = useScrollReveal()
+  
+  // Select 4 new hot-selling products for the UK market
+  const trendingList = [
+    products.find((p) => p.id === 'MBL-D001')!,
+    products.find((p) => p.id === 'MBL-L001')!,
+    products.find((p) => p.id === 'MBL-ACT002')!,
+    products.find((p) => p.id === 'MBL-F002')!,
+  ].filter(Boolean)
+
+  if (trendingList.length === 0) return null
+
+  return (
+    <section ref={ref} className="bg-white py-section-desktop border-t border-light-border">
+      <div className="max-w-container mx-auto px-6">
+        <div className="flex items-end justify-between mb-10">
+          <div>
+            <SectionLabel text="TRENDING IN THE UK" />
+            <h2 className="font-display text-display-md text-navy mt-3">UK Best Sellers & Hot Items</h2>
+            <p className="font-body text-slate mt-2 max-w-lg">
+              The most searched designer products in the UK fashion market. High demand and styling classics.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {trendingList.map((product, i) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.08, duration: 0.6, ease: easeOutExpo }}
+            >
+              <ProductCard product={product} />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ──────────────────────────────────────
+// Shop By Style Data & Component
+// ──────────────────────────────────────
+const stylesData = [
+  {
+    name: 'Denim Collection',
+    tagline: 'UK No.1 Search Volume',
+    image: '/products/denim_collection.png',
+    path: '/shop/women',
+    state: { subCategory: 'Denim' },
+  },
+  {
+    name: 'Loungewear & Pyjamas',
+    tagline: 'Cozy Luxury Lounge',
+    image: '/products/loungewear.jpg',
+    path: '/shop/women',
+    state: { subCategory: 'Loungewear' },
+  },
+  {
+    name: 'Athleisure & Activewear',
+    tagline: 'Trending High-Performance',
+    image: '/products/activewear.jpg',
+    path: '/shop/women',
+    state: { subCategory: 'Activewear' },
+  },
+  {
+    name: 'Formalwear & Tailoring',
+    tagline: 'Classic Sophistication',
+    image: '/products/formalwear.jpg',
+    path: '/shop/men',
+    state: { subCategory: 'Formalwear' },
+  },
+]
+
+function ShopByStyle() {
+  const { ref, isVisible } = useScrollReveal()
+  const navigate = useNavigate()
+
+  return (
+    <section ref={ref} className="bg-cream py-section-desktop border-t border-light-border">
+      <div className="max-w-container mx-auto px-6">
+        <div className="text-center mb-12">
+          <SectionLabel text="SHOP BY STYLE" />
+          <h2 className="font-display text-display-md text-navy mt-3">Curated UK Wardrobes</h2>
+          <p className="font-body text-slate mt-2 max-w-xl mx-auto">
+            Discover collections tailored for the most popular UK search patterns and contemporary streetwear.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stylesData.map((style, i) => (
+            <motion.div
+              key={style.name}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.1, duration: 0.6, ease: easeOutExpo }}
+              onClick={() => navigate(style.path, { state: style.state })}
+              className="group cursor-pointer relative aspect-[3/4] overflow-hidden bg-navy rounded-sm border border-light-border"
+            >
+              <img
+                src={style.image}
+                alt={style.name}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/placeholder-product.jpg'
+                }}
+              />
+              <div className="absolute inset-0 bg-navy/40 group-hover:bg-navy/60 transition-all duration-300" />
+              
+              <div className="absolute bottom-0 inset-x-0 p-6 flex flex-col justify-end text-left">
+                <span className="font-body text-[11px] font-bold uppercase tracking-wider text-gold mb-1.5 block">
+                  {style.tagline}
+                </span>
+                <h3 className="font-display text-[22px] leading-tight text-white mb-2 group-hover:text-gold transition-colors">
+                  {style.name}
+                </h3>
+                <span className="font-body text-[12px] font-semibold text-white/70 uppercase tracking-wider group-hover:text-white transition-colors inline-flex items-center gap-1.5">
+                  View Collection <ChevronRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ──────────────────────────────────────
 // Home Page
 // ──────────────────────────────────────
 export default function Home() {
@@ -616,8 +750,14 @@ export default function Home() {
       {/* Section 4: Featured Products */}
       <FeaturedProducts />
 
+      {/* Section 4.5: Trending Products */}
+      <TrendingProducts />
+
       {/* Section 5: Category Showcase */}
       <CategoryShowcase />
+
+      {/* Section 5.5: Shop By Style */}
+      <ShopByStyle />
 
       {/* Section 6: Editorial Banner */}
       <EditorialBanner />

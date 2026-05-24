@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingBag, Search, User, Menu, X, ChevronDown } from 'lucide-react'
 import { useCart } from '@/store/cart'
 import MiniCart from './MiniCart'
+import SearchBar from './SearchBar'
 
 const shopCategories = [
   { name: 'Men', path: '/shop/men', image: '/category-men.jpg' },
@@ -32,6 +33,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileBrandsOpen, setMobileBrandsOpen] = useState(false)
   const [miniCartOpen, setMiniCartOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const navigate = useNavigate()
   const cartItems = useCart((s) => s.items)
   const totalItems = cartItems.reduce((sum, i) => sum + i.quantity, 0)
@@ -179,6 +181,12 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
             <Link
+              to="/new-in"
+              className="font-body font-medium text-[14px] text-white uppercase tracking-[0.06em] hover:text-gold transition-colors duration-300"
+            >
+              New In
+            </Link>
+            <Link
               to="/about"
               className="font-body font-medium text-[14px] text-white uppercase tracking-[0.06em] hover:text-gold transition-colors duration-300"
             >
@@ -199,7 +207,11 @@ export default function Navbar() {
 
           {/* Right: Icons */}
           <div className="flex items-center gap-5">
-            <button className="text-white hover:text-gold transition-colors duration-300">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="text-white hover:text-gold transition-colors duration-300"
+              aria-label="Search"
+            >
               <Search size={20} strokeWidth={1.5} />
             </button>
             <button
@@ -319,6 +331,9 @@ export default function Navbar() {
 
       {/* MiniCart Drawer */}
       <MiniCart isOpen={miniCartOpen} onClose={() => setMiniCartOpen(false)} />
+
+      {/* Search Bar Modal */}
+      <SearchBar isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   )
 }

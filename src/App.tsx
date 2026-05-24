@@ -13,6 +13,8 @@ import Contact from './pages/Contact'
 import Cart from './pages/Cart'
 import OrderConfirmation from './pages/OrderConfirmation'
 import OrderTracking from './pages/OrderTracking'
+import SizeGuide from './pages/SizeGuide'
+import NewIn from './pages/NewIn'
 
 export default function App() {
   return (
@@ -31,6 +33,8 @@ export default function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
         <Route path="/track-order" element={<OrderTracking />} />
+        <Route path="/size-guide" element={<SizeGuide />} />
+        <Route path="/new-in" element={<NewIn />} />
       </Route>
     </Routes>
   )
