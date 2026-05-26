@@ -4,14 +4,14 @@
 
 @layer base {
   :root {
-    --navy: #0A1628;
-    --gold: #C9A96E;
-    --gold-light: #E8D5A3;
-    --cream: #F5F0EB;
-    --charcoal: #1E293B;
-    --slate: #64748B;
-    --warm-gray: #9CA3AF;
-    --light-border: rgba(10, 22, 40, 0.08);
+    --navy: #191919;
+    --gold: #191919;
+    --gold-light: #4a4a4a;
+    --cream: #ffffff;
+    --charcoal: #2a2a2a;
+    --slate: #5a5a5a;
+    --warm-gray: #8c8c8c;
+    --light-border: rgba(25, 25, 25, 0.08);
     --dark-border: rgba(255, 255, 255, 0.1);
     --background: 30 23% 95%;
     --foreground: 216 56% 10%;
