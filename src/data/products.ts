@@ -2560,32 +2560,195 @@ export function getNewArrivals(): Product[] {
 }
 
 export function getProductSubCategory(product: Product): string {
-  if (product.subCategory) return product.subCategory
-  
+  const cat = product.category
+  const origSub = (product.subCategory || '').trim()
   const name = product.name.toLowerCase()
-  if (name.includes('t-shirt') || name.includes(' tee')) return 'T-Shirts'
-  if (name.includes('polo')) return 'Polos'
-  if (name.includes('shirt')) return 'Shirts'
-  if (name.includes('hoodie')) return 'Hoodies'
-  if (name.includes('chinos') || name.includes('trousers')) return 'Pants'
-  if (name.includes('jacket') || name.includes('parka') || name.includes('coat')) return 'Jackets'
-  if (name.includes('sweater') || name.includes('jumper')) return 'Sweaters'
-  if (name.includes('shorts')) return 'Shorts'
-  if (name.includes('dress')) return 'Dresses'
-  if (name.includes('heels') || name.includes('pumps') || name.includes('sneakers') || name.includes('shoes') || name.includes('slides') || name.includes('espadrilles') || name.includes('loafer')) return 'Shoes'
-  if (name.includes('sunglasses')) return 'Sunglasses'
-  if (name.includes('card holder')) return 'Card Holders'
-  if (name.includes('wallet')) return 'Wallets'
-  if (name.includes('bag') || name.includes('tote') || name.includes('backpack')) return 'Bags'
-  if (name.includes('scarf')) return 'Scarves'
-  if (name.includes('cap') || name.includes('beanie')) return 'Hats'
-  if (name.includes('watch') || name.includes('timepiece')) return 'Watches'
-  if (name.includes('belt')) return 'Belts'
-  if (name.includes('bracelet')) return 'Jewelry'
-  if (name.includes('pen')) return 'Pens'
-  if (name.includes('set')) return 'Sets'
-  
-  return 'Accessories'
+
+  if (cat === 'men') {
+    // Swimwear
+    if (origSub === 'Swimwear' || name.includes('swim') || name.includes('board') || name.includes('trunk')) {
+      return 'Swimwear'
+    }
+    // Jackets & Coats (Outerwear)
+    if (origSub === 'Jackets' || name.includes('jacket') || name.includes('parka') || name.includes('coat') || name.includes('puffer') || name.includes('bomber') || name.includes('windbreaker') || name.includes('gilet')) {
+      return 'Jackets & Coats'
+    }
+    // Suits & Blazers
+    if (origSub === 'Formalwear' || name.includes('suit') || name.includes('blazer') || name.includes('tailored') || name.includes('tuxedo')) {
+      return 'Suits & Blazers'
+    }
+    // Hoodies & Sweatshirts
+    if (origSub === 'Hoodies' || origSub === 'Activewear' || name.includes('hoodie') || name.includes('tracksuit') || name.includes('fleece') || name.includes('sweatshirt') || name.includes('crewneck')) {
+      return 'Hoodies & Sweatshirts'
+    }
+    // Knitwear
+    if (origSub === 'Knitwear' || origSub === 'Sweaters' || name.includes('turtleneck') || name.includes('wool') || name.includes('sweater') || name.includes('jumper') || name.includes('cardigan') || name.includes('knit')) {
+      return 'Knitwear'
+    }
+    // Shirts
+    if (origSub === 'Shirts' || name.includes('shirt')) {
+      if (name.includes('t-shirt') || name.includes('polo') || name.includes('tee')) {
+        // Fallthrough to T-Shirts & Polos below
+      } else {
+        return 'Shirts'
+      }
+    }
+    // T-Shirts & Polos
+    if (origSub === 'T-Shirts' || origSub === 'Polos' || name.includes('t-shirt') || name.includes('polo') || name.includes('tee')) {
+      return 'T-Shirts & Polos'
+    }
+    // Jeans
+    if (origSub === 'Denim' || name.includes('jeans') || name.includes('denim')) {
+      return 'Jeans'
+    }
+    // Trousers
+    if (origSub === 'Trousers' || origSub === 'Loungewear' || name.includes('chinos') || name.includes('trousers') || name.includes('pants') || name.includes('jogger')) {
+      return 'Trousers'
+    }
+    // Shorts
+    if (origSub === 'Shorts' || name.includes('shorts')) {
+      return 'Shorts'
+    }
+    // Shoes
+    if (origSub === 'Shoes' || name.includes('loafer') || name.includes('sneaker') || name.includes('boot') || name.includes('shoes') || name.includes('slides') || name.includes('shoe')) {
+      return 'Shoes'
+    }
+    // Bags & Accessories
+    if (origSub.includes('Bag') || name.includes('bag') || name.includes('backpack') || name.includes('beanie') || name.includes('cap') || name.includes('hat') || name.includes('belt') || name.includes('scarf') || name.includes('gloves')) {
+      return 'Bags & Accessories'
+    }
+    return 'Apparel'
+  }
+
+  if (cat === 'women') {
+    // Bags
+    if (origSub.includes('Bag') || origSub === 'Handbags' || origSub === 'Tote Bags' || origSub === 'Crossbody Bags' || origSub === 'Shoulder Bags' || origSub === 'Bucket Bags' || origSub === 'Hobo Bags' || origSub === 'Mini Bags' || origSub === 'Belt Bags' || origSub === 'Travel Bags' || name.includes('bag') || name.includes('tote') || name.includes('backpack') || name.includes('purse') || name.includes('clutch') || name.includes('keepall') || name.includes('speedy') || name.includes('neverfull') || name.includes('pochette')) {
+      return 'Bags'
+    }
+    // Shoes
+    if (origSub === 'Shoes' || origSub === 'Heels' || origSub === 'Ballerinas' || origSub === 'Boots' || origSub === 'Loafers' || origSub === 'Sandals' || name.includes('pumps') || name.includes('slingback') || name.includes('flats') || name.includes('heels') || name.includes('sneakers') || name.includes('sandals') || name.includes('loafers') || name.includes('boots') || name.includes('shoes') || name.includes('slides')) {
+      return 'Shoes'
+    }
+    // Swimwear
+    if (origSub === 'Swimwear' || name.includes('bikini') || name.includes('swimsuit') || name.includes('beach cover')) {
+      return 'Swimwear'
+    }
+    // Coats & Jackets
+    if (origSub === 'Jackets' || name.includes('trench') || name.includes('jacket') || name.includes('parka') || name.includes('coat') || name.includes('blazer') || name.includes('outerwear') || name.includes('bomber')) {
+      return 'Coats & Jackets'
+    }
+    // Knitwear
+    if (origSub === 'Knitwear' || name.includes('cardigan') || name.includes('sweater') || name.includes('knit') || name.includes('jumper')) {
+      return 'Knitwear'
+    }
+    // Dresses
+    if (origSub === 'Dresses' || origSub === 'Formalwear' || name.includes('dress') || name.includes('gown')) {
+      return 'Dresses'
+    }
+    // Shirts & Blouses
+    if (origSub === 'Shirts' || name.includes('blouse') || name.includes('shirt') || name.includes('top')) {
+      return 'Shirts & Blouses'
+    }
+    // Jeans
+    if (origSub === 'Denim' || name.includes('jeans') || name.includes('denim')) {
+      return 'Jeans'
+    }
+    // Trousers
+    if (origSub === 'Trousers' || origSub === 'Loungewear' || origSub === 'Activewear' || name.includes('pants') || name.includes('trousers') || name.includes('leggings') || name.includes('jogger') || name.includes('sweatpants') || name.includes('sweatshirt')) {
+      return 'Trousers'
+    }
+    // Jewelry
+    if (origSub === 'Bracelets' || origSub === 'Earrings' || origSub === 'Necklaces' || name.includes('bangle') || name.includes('earrings') || name.includes('necklace') || name.includes('bracelet') || name.includes('ring') || name.includes('clou')) {
+      return 'Jewelry'
+    }
+    // Accessories
+    if (origSub === 'Sunglasses' || origSub === 'Wallets' || origSub === 'Card Holders' || name.includes('sunglasses') || name.includes('wallet') || name.includes('card holder') || name.includes('belt') || name.includes('scarf') || name.includes('hat') || name.includes('beanie')) {
+      return 'Accessories'
+    }
+    return 'Apparel'
+  }
+
+  if (cat === 'children') {
+    // Coats & Jackets
+    if (origSub === 'Jackets' || origSub === 'Body Warmers' || name.includes('jacket') || name.includes('coat') || name.includes('gilet') || name.includes('padded')) {
+      return 'Coats & Jackets'
+    }
+    // Dresses
+    if (origSub === 'Dresses' || name.includes('dress')) {
+      return 'Dresses'
+    }
+    // T-Shirts & Tops
+    if (origSub === 'T-Shirts' || origSub === 'Polos' || name.includes('t-shirt') || name.includes('polo') || name.includes('tee')) {
+      return 'T-Shirts & Tops'
+    }
+    // Hoodies & Sweatshirts
+    if (origSub === 'Hoodies' || origSub === 'Tracksuits' || origSub === 'Sweatshirts' || origSub === 'Sets' || name.includes('hoodie') || name.includes('tracksuit') || name.includes('sweatshirt') || name.includes('set') || name.includes('outfit')) {
+      return 'Hoodies & Sweatshirts'
+    }
+    // Trousers & Jeans
+    if (origSub === 'Joggers' || origSub === 'Trousers' || name.includes('jeans') || name.includes('denim') || name.includes('jogger') || name.includes('pants') || name.includes('trousers') || name.includes('leggings')) {
+      return 'Trousers & Jeans'
+    }
+    // Shorts
+    if (origSub === 'Shorts' || name.includes('shorts')) {
+      return 'Shorts'
+    }
+    // Swimwear
+    if (origSub === 'Swimwear' || name.includes('swim') || name.includes('beach')) {
+      return 'Swimwear'
+    }
+    // Shoes
+    if (origSub === 'Shoes' || name.includes('sneakers') || name.includes('shoes') || name.includes('boots') || name.includes('slides')) {
+      return 'Shoes'
+    }
+    // Bags & Accessories
+    if (origSub === 'Bags' || name.includes('backpack') || name.includes('bag') || name.includes('beanie') || name.includes('cap') || name.includes('hat') || name.includes('scarf') || name.includes('gown')) {
+      return 'Bags & Accessories'
+    }
+    return 'Kids Apparel'
+  }
+
+  if (cat === 'accessories') {
+    // Watches
+    if (origSub === 'Watches' || name.includes('watch') || name.includes('daytona') || name.includes('submariner') || name.includes('datejust') || name.includes('timepiece') || name.includes('chronograph')) {
+      return 'Watches'
+    }
+    // Sunglasses
+    if (origSub === 'Sunglasses' || name.includes('sunglasses')) {
+      return 'Sunglasses'
+    }
+    // Bags
+    if (origSub === 'Bags' || origSub.includes('Bag') || name.includes('bag') || name.includes('tote') || name.includes('keepall') || name.includes('backpack') || name.includes('sleeve') || name.includes('speedy') || name.includes('neverfull')) {
+      return 'Bags'
+    }
+    // Wallets & Cardholders
+    if (origSub === 'Wallets' || origSub === 'Card Holders' || name.includes('wallet') || name.includes('card holder') || name.includes('cardholder') || name.includes('goyard card') || name.includes('bearn')) {
+      return 'Wallets & Cardholders'
+    }
+    // Belts
+    if (origSub === 'Belts' || name.includes('belt')) {
+      return 'Belts'
+    }
+    // Jewelry
+    if (origSub === 'Bracelets' || origSub === 'Earrings' || origSub === 'Necklaces' || name.includes('bangle') || name.includes('juste un clou') || name.includes('necklace') || name.includes('jewelry') || name.includes('bracelet') || name.includes('ring')) {
+      return 'Jewelry'
+    }
+    // Shoes & Sneakers
+    if (origSub === 'Shoes' || origSub === 'Sneakers' || name.includes('sneakers') || name.includes('shoes') || name.includes('loafer') || name.includes('driving') || name.includes('espadrilles') || name.includes('pumps')) {
+      return 'Shoes & Sneakers'
+    }
+    // Scarves & Hats
+    if (name.includes('scarf') || name.includes('cap') || name.includes('beanie') || name.includes('hat')) {
+      return 'Scarves & Hats'
+    }
+    // Writing Instruments
+    if (name.includes('pen') || name.includes('meisterstück') || name.includes('writing')) {
+      return 'Writing Instruments'
+    }
+    return 'Luxury Accessories'
+  }
+
+  return origSub || 'Luxury Accessories'
 }
 
 export function getProductsByBrand(brand: string): Product[] {
