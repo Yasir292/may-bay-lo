@@ -5,6 +5,7 @@ export interface Product {
   price: number
   originalPrice: number
   image: string
+  images?: string[]
   category: 'men' | 'women' | 'children' | 'accessories'
   subCategory?: string
   code: string
@@ -19,6 +20,50 @@ export interface Product {
 // MEN'S COLLECTION
 // ──────────────────────────────────────────
 const menProducts: Product[] = [
+  {
+    id: 'NEW-SHOE-1',
+    name: 'Premium Leather High-Top Sneakers',
+    brand: 'May Bay Lo Exclusive',
+    price: 150,
+    originalPrice: 195,
+    image: '/products/men/MENS_SHOE_1_1.jpg',
+    images: [
+      '/products/men/MENS_SHOE_1_1.jpg',
+      '/products/men/MENS_SHOE_1_2.jpg',
+      '/products/men/MENS_SHOE_1_3.jpg',
+      '/products/men/MENS_SHOE_1_4.jpg'
+    ],
+    category: 'men',
+    subCategory: 'Shoes',
+    code: 'SHOE-001',
+    description: 'Elevate your casual look with these premium leather high-top sneakers. Featuring a sleek silhouette and comfortable fit, perfect for everyday wear.',
+    sizes: ['7', '8', '9', '10', '11'],
+    isNew: true,
+    isSale: false,
+    gender: 'men',
+  },
+  {
+    id: 'NEW-SHOE-2',
+    name: 'Classic Urban Trainers',
+    brand: 'May Bay Lo Exclusive',
+    price: 120,
+    originalPrice: 160,
+    image: '/products/men/MENS_SHOE_2_1.jpg',
+    images: [
+      '/products/men/MENS_SHOE_2_1.jpg',
+      '/products/men/MENS_SHOE_2_2.jpg',
+      '/products/men/MENS_SHOE_2_3.jpg',
+      '/products/men/MENS_SHOE_2_4.jpg'
+    ],
+    category: 'men',
+    subCategory: 'Shoes',
+    code: 'SHOE-002',
+    description: 'Discover comfort and style with our Classic Urban Trainers. Designed for the modern man, these shoes offer exceptional support and a timeless aesthetic.',
+    sizes: ['7', '8', '9', '10', '11'],
+    isNew: true,
+    isSale: true,
+    gender: 'men',
+  },
   {
     id: '1051217',
     name: 'Designer T-Shirt',

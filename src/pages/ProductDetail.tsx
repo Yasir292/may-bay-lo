@@ -13,6 +13,7 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1)
   const [showToast, setShowToast] = useState(false)
   const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [activeImage, setActiveImage] = useState(product?.image || '')
   const addItem = useCart((s) => s.addItem)
 
   // Reset quantity when product changes
@@ -20,7 +21,10 @@ export default function ProductDetail() {
     setQuantity(1)
     setSelectedSize('')
     setShowToast(false)
-  }, [id])
+    if (product) {
+      setActiveImage(product.image)
+    }
+  }, [id, product])
 
   if (!product) {
     return (
@@ -116,7 +120,7 @@ export default function ProductDetail() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              src={product.image}
+              src={activeImage}
               alt={product.name}
               className="max-w-full max-h-[90vh] object-contain"
               onClick={(e) => e.stopPropagation()}
@@ -160,7 +164,7 @@ export default function ProductDetail() {
               onClick={() => setLightboxOpen(true)}
             >
               <img
-                src={product.image}
+                src={activeImage}
                 alt={product.name}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
@@ -170,6 +174,23 @@ export default function ProductDetail() {
                 </div>
               </div>
             </div>
+            
+            {/* Thumbnails */}
+            {product.images && product.images.length > 1 && (
+              <div className="grid grid-cols-5 gap-3 mt-4">
+                {product.images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveImage(img)}
+                    className={`aspect-[4/5] overflow-hidden border rounded-sm transition-all duration-300 ${
+                      activeImage === img ? 'border-gold opacity-100 ring-1 ring-gold shadow-sm' : 'border-light-border opacity-70 hover:opacity-100'
+                    }`}
+                  >
+                    <img src={img} alt={`${product.name} ${i + 1}`} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </motion.div>
 
           {/* Details */}
