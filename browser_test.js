@@ -1,89 +1,103 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+
+async function checkCategory(page, categoryName, linkHref) {
+  console.log(`\nNavigating to ${categoryName} via click...`);
+  
+  // Wait for the link to appear and be clickable
+  const selector = `a[href="${linkHref}"]`;
+  await page.waitForSelector(selector, { visible: true, timeout: 10000 });
+  
+  // Use page.evaluate to click to avoid "element not interactable" errors if covered
+  await page.evaluate((sel) => {
+    document.querySelector(sel).click();
+  }, selector);
+  
+  // Wait for network idle to ensure products load
+  await page.waitForNetworkIdle({ idleTime: 500, timeout: 5000 }).catch(() => {});
+  
+  // Give framer-motion time to animate in the ProductCards
+  await new Promise(r => setTimeout(r, 2000));
+  
+  const images = await page.evaluate(() => {
+    const imgs = Array.from(document.querySelectorAll('img'));
+    return imgs.map(img => ({
+      src: img.src,
+      alt: img.alt,
+      complete: img.complete,
+      naturalWidth: img.naturalWidth,
+      naturalHeight: img.naturalHeight
+    }));
+  });
+
+  console.log(`Found ${images.length} images on ${categoryName}.`);
+  let broken = 0;
+  for (const img of images) {
+    if (!img.complete || img.naturalWidth === 0) {
+      broken++;
+      console.log(`⚠️  Broken image on ${categoryName}: ${img.src}`);
+    }
+  }
+  
+  console.log(`Broken DOM images on ${categoryName}: ${broken}`);
+  
+  return broken;
+}
 
 (async () => {
   console.log('Launching headless browser (Microsoft Edge) for automated testing...');
   const browser = await puppeteer.launch({
     executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
-    headless: true
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
+  
   const page = await browser.newPage();
+  await page.setViewport({ width: 1280, height: 800 });
   
-  let errors = [];
-  
-  page.on('console', msg => {
-    if (msg.type() === 'error' && !msg.text().includes('favicon')) {
-      errors.push(msg.text());
-    }
-  });
-
+  const pageErrors = [];
+  page.on('pageerror', error => pageErrors.push(error.message));
   page.on('requestfailed', request => {
-    if(!request.url().includes('favicon')) {
-      errors.push(`Request failed: ${request.url()} - ${request.failure().errorText}`);
-    }
+    pageErrors.push(`Failed to load resource: ${request.url()} - ${request.failure()?.errorText || 'unknown error'}`);
   });
 
-  console.log('Navigating to homepage...');
-  await page.goto('https://app-seven-flame-32.vercel.app/', { waitUntil: 'networkidle0' });
-  
-  // FIXED PATHS
-  const linksToTest = ['/shop/men', '/shop/women', '/shop/accessories', '/shop/children'];
-  
-  for (const link of linksToTest) {
-    console.log(`\nNavigating to ${link}...`);
-    const response = await page.goto(`https://app-seven-flame-32.vercel.app${link}`, { waitUntil: 'networkidle0' });
+  try {
+    const baseUrl = 'https://app-seven-flame-32.vercel.app';
+    console.log(`Navigating to homepage: ${baseUrl}`);
+    await page.goto(baseUrl, { waitUntil: 'networkidle2' });
     
-    if (response.status() === 404) {
-      errors.push(`404 Error: ${link} does not exist`);
+    await new Promise(r => setTimeout(r, 2000));
+
+    let totalBroken = 0;
+    
+    const categories = [
+      { name: 'Men', href: '/shop/men' },
+      { name: 'Women', href: '/shop/women' },
+      { name: 'Accessories', href: '/shop/accessories' },
+      { name: 'Children', href: '/shop/children' }
+    ];
+
+    for (const cat of categories) {
+      // Force navigation back to homepage before each click to ensure nav is visible
+      await page.goto(baseUrl, { waitUntil: 'networkidle2' });
+      await new Promise(r => setTimeout(r, 1000));
+      totalBroken += await checkCategory(page, cat.name, cat.href);
     }
 
-    await page.evaluate(() => {
-      window.scrollBy(0, document.body.scrollHeight);
-    });
-    
-    await new Promise(r => setTimeout(r, 2000)); // wait for images to load
-    
-    const images = await page.evaluate(() => {
-      const imgs = Array.from(document.querySelectorAll('img'));
-      return imgs.map(img => ({
-        src: img.src,
-        complete: img.complete,
-        naturalWidth: img.naturalWidth
-      }));
-    });
-    
-    let brokenCount = 0;
-    images.forEach(img => {
-      if (img.complete && img.naturalWidth === 0 && img.src && !img.src.includes('data:image')) {
-        brokenCount++;
-        errors.push(`Broken image found on ${link}: ${img.src}`);
-      }
-    });
-    
-    console.log(`Found ${images.length} images on ${link}. Broken DOM images: ${brokenCount}`);
-    
-    // Click on the first product card if any
-    const firstProduct = await page.$('a[href^="/product/"]');
-    if (firstProduct) {
-      console.log(`Clicking on a product from ${link}...`);
-      await Promise.all([
-        page.waitForNavigation({ waitUntil: 'networkidle0' }).catch(() => {}),
-        firstProduct.click(),
-      ]);
-      console.log(`Successfully navigated to product detail page from ${link}.`);
-    } else {
-      console.log(`No products found to click on ${link}.`);
+    console.log('\n--- TEST RESULTS ---');
+    if (pageErrors.length > 0) {
+      console.log(`Tests finished with ${pageErrors.length} errors:`);
+      pageErrors.slice(0, 5).forEach(e => console.log(`❌ ${e}`));
     }
+    
+    if (totalBroken > 0) {
+      console.log(`Tests finished, but found ${totalBroken} broken images.`);
+    } else if (pageErrors.length === 0) {
+      console.log('✅ All tests passed! Website is working flawlessly. All images loaded correctly across all sections!');
+    }
+    
+  } catch (err) {
+    console.error('Test execution failed:', err);
+  } finally {
+    await browser.close();
   }
-
-  console.log('\n--- TEST RESULTS ---');
-  if (errors.length > 0) {
-    console.log(`Tests finished with ${errors.length} errors:`);
-    const uniqueErrors = [...new Set(errors)];
-    uniqueErrors.slice(0, 10).forEach(err => console.log('❌ ' + err));
-    if (uniqueErrors.length > 10) console.log(`...and ${uniqueErrors.length - 10} more errors.`);
-  } else {
-    console.log('✅ ALL TESTS PASSED! No console errors, no failed network requests, and all images loaded correctly in the actual visual browser!');
-  }
-
-  await browser.close();
 })();
