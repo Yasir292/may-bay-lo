@@ -7,10 +7,10 @@ import MiniCart from './MiniCart'
 import SearchBar from './SearchBar'
 
 const shopCategories = [
-  { name: 'Men', path: '/shop/men', image: '/category-men.jpg' },
-  { name: 'Women', path: '/shop/women', image: '/category-women.jpg' },
-  { name: 'Children', path: '/shop/children', image: '/category-children.jpg' },
-  { name: 'Accessories', path: '/shop/accessories', image: '/category-accessories.jpg' },
+  { name: 'Men', path: '/shop/men', image: '/category-men.webp' },
+  { name: 'Women', path: '/shop/women', image: '/category-women.webp' },
+  { name: 'Children', path: '/shop/children', image: '/category-children.webp' },
+  { name: 'Accessories', path: '/shop/accessories', image: '/category-accessories.webp' },
 ]
 
 const topBrands = [
@@ -69,7 +69,7 @@ export default function Navbar() {
           <div className="w-full max-w-container-wide mx-auto flex items-center justify-between gap-6">
             {/* Logo */}
             <Link to="/" className="flex-shrink-0">
-              <img src="/logo.png" alt="MAY BAY LO" className="h-[40px] md:h-[50px] w-auto object-contain" />
+              <img src="/logo.webp" alt="MAY BAY LO" className="h-[40px] md:h-[50px] w-auto object-contain" />
             </Link>
 
             {/* Embedded Search Input (triggers full Search Modal on focus/click) */}

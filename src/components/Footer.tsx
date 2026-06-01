@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link to="/" className="inline-block mb-4">
-              <img src="/logo.png" alt="MAY BAY LO" className="h-[32px] md:h-[40px] w-auto object-contain" />
+              <img src="/logo.webp" alt="MAY BAY LO" className="h-[32px] md:h-[40px] w-auto object-contain" />
             </Link>
             <p className="font-body text-[14px] text-[#4a4a4a] leading-relaxed">
               London&apos;s Finest Since 2018

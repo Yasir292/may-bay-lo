@@ -10,28 +10,28 @@ import ProductCard from '@/components/ProductCard'
 // ──────────────────────────────────────
 const heroSlides = [
   {
-    image: '/hero-men.jpg',
+    image: '/hero-men.webp',
     label: "MEN'S COLLECTION",
     headline: 'Timeless British Elegance',
     subtext: 'Premium apparel curated for the modern gentleman',
     cta: '/shop/men',
   },
   {
-    image: '/hero-women.jpg',
+    image: '/hero-women.webp',
     label: "WOMEN'S COLLECTION",
     headline: 'Effortless Sophistication',
     subtext: 'Designer pieces that define contemporary grace',
     cta: '/shop/women',
   },
   {
-    image: '/hero-children.jpg',
+    image: '/hero-children.webp',
     label: "CHILDREN'S WEAR",
     headline: 'Refined Style for the Young',
     subtext: 'Quality clothing for every young adventurer',
     cta: '/shop/children',
   },
   {
-    image: '/hero-accessories.jpg',
+    image: '/hero-accessories.webp',
     label: 'LUXURY ACCESSORIES',
     headline: 'The Finishing Touch',
     subtext: "Handpicked accessories from the world's finest houses",
@@ -64,10 +64,10 @@ const testimonials = [
 // Category Data
 // ──────────────────────────────────────
 const categories = [
-  { name: 'MEN', image: '/category-men.jpg', cta: '/shop/men' },
-  { name: 'WOMEN', image: '/category-women.jpg', cta: '/shop/women' },
-  { name: 'CHILDREN', image: '/category-children.jpg', cta: '/shop/children' },
-  { name: 'ACCESSORIES', image: '/category-accessories.jpg', cta: '/shop/accessories' },
+  { name: 'MEN', image: '/category-men.webp', cta: '/shop/men' },
+  { name: 'WOMEN', image: '/category-women.webp', cta: '/shop/women' },
+  { name: 'CHILDREN', image: '/category-children.webp', cta: '/shop/children' },
+  { name: 'ACCESSORIES', image: '/category-accessories.webp', cta: '/shop/accessories' },
 ]
 
 // ──────────────────────────────────────
@@ -362,7 +362,7 @@ function EditorialBanner() {
       ref={ref}
       className="relative h-[400px] md:h-[500px] overflow-hidden bg-fixed"
       style={{
-        backgroundImage: 'url(/hero-accessories.jpg)',
+        backgroundImage: 'url(/hero-accessories.webp)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
@@ -654,28 +654,28 @@ const stylesData = [
   {
     name: 'Denim Collection',
     tagline: 'UK No.1 Search Volume',
-    image: '/products/denim_collection.png',
+    image: '/products/denim_collection.webp',
     path: '/shop/women',
     state: { subCategory: 'Denim' },
   },
   {
     name: 'Loungewear & Pyjamas',
     tagline: 'Cozy Luxury Lounge',
-    image: '/products/loungewear.jpg',
+    image: '/products/loungewear.webp',
     path: '/shop/women',
     state: { subCategory: 'Loungewear' },
   },
   {
     name: 'Athleisure & Activewear',
     tagline: 'Trending High-Performance',
-    image: '/products/activewear.jpg',
+    image: '/products/activewear.webp',
     path: '/shop/women',
     state: { subCategory: 'Activewear' },
   },
   {
     name: 'Formalwear & Tailoring',
     tagline: 'Classic Sophistication',
-    image: '/products/formalwear.jpg',
+    image: '/products/formalwear.webp',
     path: '/shop/men',
     state: { subCategory: 'Formalwear' },
   },
@@ -711,7 +711,7 @@ function ShopByStyle() {
                 alt={style.name}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/placeholder-product.jpg'
+                  (e.target as HTMLImageElement).src = '/placeholder-product.webp'
                 }}
               />
               <div className="absolute inset-0 bg-navy/40 group-hover:bg-navy/60 transition-all duration-300" />

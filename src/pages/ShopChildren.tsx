@@ -35,7 +35,7 @@ export default function ShopChildren() {
     <div className="min-h-[100dvh] bg-cream">
       {/* Hero Banner */}
       <div className="relative h-[360px] md:h-[440px] overflow-hidden">
-        <img src="/category-children.jpg" alt="Children's Collection" className="w-full h-full object-cover" />
+        <img src="/category-children.webp" alt="Children's Collection" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-navy/60" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
           <span className="section-label text-gold mb-4">Collection</span>

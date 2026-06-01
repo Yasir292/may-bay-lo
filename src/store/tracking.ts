@@ -73,7 +73,7 @@ const mockItems: OrderItem[] = [
     price: 185,
     quantity: 1,
     size: 'M',
-    image: '/product-1.jpg',
+    image: '/product-1.webp',
   },
   {
     id: 'mock-2',
@@ -82,7 +82,7 @@ const mockItems: OrderItem[] = [
     price: 245,
     quantity: 2,
     size: 'L',
-    image: '/product-2.jpg',
+    image: '/product-2.webp',
   },
   {
     id: 'mock-3',
@@ -91,7 +91,7 @@ const mockItems: OrderItem[] = [
     price: 890,
     quantity: 1,
     size: 'S',
-    image: '/product-3.jpg',
+    image: '/product-3.webp',
   },
   {
     id: 'mock-4',
@@ -100,7 +100,7 @@ const mockItems: OrderItem[] = [
     price: 165,
     quantity: 1,
     size: 'One Size',
-    image: '/product-4.jpg',
+    image: '/product-4.webp',
   },
 ]
 

@@ -5,7 +5,7 @@ export default function About() {
     <div className="min-h-[100dvh] bg-cream">
       {/* Hero */}
       <div className="relative h-[400px] md:h-[500px] overflow-hidden">
-        <img src="/about-heritage.jpg" alt="British Heritage" className="w-full h-full object-cover" />
+        <img src="/about-heritage.webp" alt="British Heritage" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-navy/70" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
           <span className="section-label text-gold mb-4">Our Story</span>
@@ -49,7 +49,7 @@ export default function About() {
           className="mt-16"
         >
           <div className="aspect-[3/2] overflow-hidden rounded-sm">
-            <img src="/about-craftsmanship.jpg" alt="Craftsmanship" className="w-full h-full object-cover" />
+            <img src="/about-craftsmanship.webp" alt="Craftsmanship" className="w-full h-full object-cover" />
           </div>
           <p className="font-body text-[14px] text-slate text-center mt-4 italic">
             Every stitch tells a story of dedication and mastery
