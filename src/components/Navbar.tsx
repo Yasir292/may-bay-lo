@@ -1,10 +1,21 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ShoppingBag, Search, User, Menu, X, ChevronDown, Heart } from 'lucide-react'
+import { ShoppingBag, Search, User, Menu, X, ChevronDown, Heart, LogOut, Package } from 'lucide-react'
 import { useCart } from '@/store/cart'
 import MiniCart from './MiniCart'
 import SearchBar from './SearchBar'
+import AuthModal from './AuthModal'
+import { useAuth } from '@/store/auth'
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu'
 
 const shopCategories = [
   { name: 'Men', path: '/shop/men', image: '/category-men.webp' },
@@ -32,6 +43,9 @@ export default function Navbar() {
   const [mobileBrandsOpen, setMobileBrandsOpen] = useState(false)
   const [miniCartOpen, setMiniCartOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+  
+  const { user, signOut } = useAuth()
   const navigate = useNavigate()
   const cartItems = useCart((s) => s.items)
   const totalItems = cartItems.reduce((sum, i) => sum + i.quantity, 0)
@@ -94,11 +108,53 @@ export default function Navbar() {
                 <Search size={20} strokeWidth={1.5} />
               </button>
 
-              {/* Account */}
-              <button className="text-[#1a1a1a] hover:text-[#5a5a5a] transition-colors flex items-center gap-1.5 font-body text-[13px]">
-                <User size={20} strokeWidth={1.5} />
-                <span className="hidden lg:inline text-navy font-semibold uppercase tracking-wider">Sign In</span>
-              </button>
+              {/* Account / User Avatar */}
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="flex items-center gap-2 hover:opacity-80 transition-opacity focus:outline-none cursor-pointer">
+                      <Avatar className="h-8 w-8 border border-neutral-200">
+                        {user.photoURL && <AvatarImage src={user.photoURL} alt={user.displayName} />}
+                        <AvatarFallback className="bg-neutral-900 text-white font-body font-bold text-xs uppercase">
+                          {user.displayName.slice(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <span className="hidden lg:inline font-body text-[13px] font-semibold text-[#1a1a1a] max-w-[120px] truncate">
+                        {user.displayName.split(' ')[0]}
+                      </span>
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56 bg-white border border-[#e5e5e5] p-2 rounded-sm shadow-xl font-body text-[13px] z-50">
+                    <DropdownMenuLabel className="font-semibold text-neutral-800 px-2 py-1.5">
+                      <div className="flex flex-col">
+                        <span className="text-sm font-semibold truncate text-[#1a1a1a]">{user.displayName}</span>
+                        <span className="text-xs text-[#7a7a7a] truncate font-normal">{user.email}</span>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator className="bg-neutral-100 my-1" />
+                    <DropdownMenuItem className="focus:bg-[#f5f5f5] cursor-pointer px-2 py-2 rounded-sm flex items-center gap-2 text-[#1a1a1a]" onClick={() => navigate('/track-order')}>
+                      <Package size={16} />
+                      Track Order
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-neutral-100 my-1" />
+                    <DropdownMenuItem 
+                      className="focus:bg-red-50 focus:text-red-600 text-red-500 cursor-pointer px-2 py-2 rounded-sm flex items-center gap-2" 
+                      onClick={() => signOut()}
+                    >
+                      <LogOut size={16} />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <button 
+                  onClick={() => setAuthModalOpen(true)}
+                  className="text-[#1a1a1a] hover:text-[#5a5a5a] transition-colors flex items-center gap-1.5 font-body text-[13px] cursor-pointer"
+                >
+                  <User size={20} strokeWidth={1.5} />
+                  <span className="hidden lg:inline text-navy font-semibold uppercase tracking-wider">Sign In</span>
+                </button>
+              )}
 
               {/* Favorites (Heart) */}
               <button className="text-[#1a1a1a] hover:text-[#5a5a5a] transition-colors">
@@ -277,10 +333,47 @@ export default function Navbar() {
                 <Link
                   to="/contact"
                   onClick={() => setMobileOpen(false)}
-                  className="font-body font-bold text-[14px] text-[#1a1a1a] uppercase tracking-[0.06em] py-2"
+                  className="font-body font-bold text-[14px] text-[#1a1a1a] uppercase tracking-[0.06em] py-2 border-b border-[#e5e5e5]"
                 >
                   Contact
                 </Link>
+                
+                {user ? (
+                  <div className="flex flex-col gap-2 pt-2">
+                    <div className="px-1 py-1 font-body text-xs text-[#7a7a7a]">
+                      Signed in as <span className="font-semibold text-[#1a1a1a]">{user.displayName}</span>
+                    </div>
+                    <Link
+                      to="/track-order"
+                      onClick={() => setMobileOpen(false)}
+                      className="font-body font-bold text-[14px] text-[#1a1a1a] uppercase tracking-[0.06em] py-2 border-b border-[#e5e5e5] flex items-center gap-2"
+                    >
+                      <Package size={16} />
+                      Track Order
+                    </Link>
+                    <button
+                      onClick={() => {
+                        setMobileOpen(false)
+                        signOut()
+                      }}
+                      className="font-body font-bold text-[14px] text-red-500 uppercase tracking-[0.06em] py-2 text-left flex items-center gap-2 cursor-pointer"
+                    >
+                      <LogOut size={16} />
+                      Sign Out
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setMobileOpen(false)
+                      setAuthModalOpen(true)
+                    }}
+                    className="font-body font-bold text-[14px] text-[#1a1a1a] uppercase tracking-[0.06em] py-2 text-left cursor-pointer flex items-center gap-2"
+                  >
+                    <User size={16} />
+                    Sign In
+                  </button>
+                )}
               </div>
             </motion.div>
           )}
@@ -295,6 +388,9 @@ export default function Navbar() {
 
       {/* Search Bar Modal */}
       <SearchBar isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+
+      {/* Authentication Modal */}
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
     </>
   )
 }
